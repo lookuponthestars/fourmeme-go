@@ -68,7 +68,7 @@ func (c *ApiClient) CreateMessage(address string) (string, error) {
 		return "", err
 	}
 
-	if jsonResponse.Code != 0 || jsonResponse.Data == "" {
+	if jsonResponse.Code != 0 || jsonResponse.Msg == "success" {
 		return "", fmt.Errorf("error from server when creating sign-in message: %s", jsonResponse.Msg)
 	}
 
@@ -146,7 +146,7 @@ func (c *ApiClient) SendMessage(address, signature string) error {
 		return err
 	}
 
-	if jsonResponse.Code != 0 || jsonResponse.Data == "" {
+	if jsonResponse.Code != 0 || jsonResponse.Msg == "success" {
 		return fmt.Errorf("error from server when creating sign-in message: %s", jsonResponse.Msg)
 	}
 
