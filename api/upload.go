@@ -84,8 +84,6 @@ func (c *ApiClient) uploadFile(filePath string) (string, error) {
 		}
 	}
 
-	fmt.Println(contentType)
-
 	var body bytes.Buffer
 	writer := multipart.NewWriter(&body)
 
