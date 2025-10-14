@@ -56,10 +56,6 @@ func (c *ApiClient) CreateMessage(address string) (string, error) {
 
 	defer response.Body.Close()
 
-	if response.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("unexpected status code when creating sign-in message: %d", response.StatusCode)
-	}
-
 	var jsonResponse nonceResponse
 
 	err = json.NewDecoder(response.Body).Decode(&jsonResponse)
@@ -68,7 +64,7 @@ func (c *ApiClient) CreateMessage(address string) (string, error) {
 		return "", err
 	}
 
-	if jsonResponse.Code != 0 || jsonResponse.Msg == "success" {
+	if jsonResponse.Code != 0 || jsonResponse.Msg != "success" {
 		return "", fmt.Errorf("error from server when creating sign-in message: %s", jsonResponse.Msg)
 	}
 
@@ -134,10 +130,6 @@ func (c *ApiClient) SendMessage(address, signature string) error {
 
 	defer response.Body.Close()
 
-	if response.StatusCode != http.StatusOK {
-		return fmt.Errorf("unexpected status code when creating sign-in message: %d", response.StatusCode)
-	}
-
 	var jsonResponse loginResponse
 
 	err = json.NewDecoder(response.Body).Decode(&jsonResponse)
@@ -146,7 +138,7 @@ func (c *ApiClient) SendMessage(address, signature string) error {
 		return err
 	}
 
-	if jsonResponse.Code != 0 || jsonResponse.Msg == "success" {
+	if jsonResponse.Code != 0 || jsonResponse.Msg != "success" {
 		return fmt.Errorf("error from server when creating sign-in message: %s", jsonResponse.Msg)
 	}
 
